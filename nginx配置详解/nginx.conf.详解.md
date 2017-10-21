@@ -1,4 +1,3 @@
-
 #配置文件翻译
 
 	#user  nobody;//运行的用户及用户组，例如 user ningx ningx
@@ -28,7 +27,7 @@ worker_connections  1024;//每个工作进程worker_progress的最大处理连�
 	    include       mime.types;//包含进mime类型文件，该文件里设置了mime类型定义
 	    default_type  application/octet-stream;//默认类型
 
- default_type  application/octet-stream;//指定默认类型为二进制流,也就是当文件类型（在文件头content-type）未 定义时使用application/octet-stream，ctet-stream代表的是文件的形式传输的，这样做的好处是可以传输多种格式的文件，不管你是jpeg还是png都可以通过这种方式传送过去
+ default_type  application/octet-stream;//指定默认类型为二进制流,也就是当文件类型（在文件头content-type）未 定义时使用application/octet-stream，octet-stream代表的是文件的形式传输的，这样做的好处是可以传输多种格式的文件，不管你是jpeg还是png都可以通过这种方式传送过去
 	
 	    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
 	    #                  '$status $body_bytes_sent "$http_referer" '
@@ -51,11 +50,11 @@ $body_bytes_sent记录发送给客户端文件主体内容大小
 $http_referer用来记录从哪个页面链接访问过来的
 $http_user_agent用来记录客户浏览器的相关信息
 
-注意：通常web服务器放在反向代理的后面即apache放在nginx后处理，因此就不能获取到客户端IP地址了，通过$remote_addr拿到的ip地址为反向代代理服务器的ip地址。反向代理服务器在转发请求的http头信息中，可以增加x_forwarded_for信息，用以记录原有客户端的ip地址和原来客户端的请求的服务器地址
+注意：通常web服务器放在反向代理的后面即apache放在nginx后处理，因此就不能获取到客户端IP地址了，通过$remote_addr拿到的ip地址为反向代代理服务器的ip地址。反向代理服务器在转发请求的http头信息中，可以增加x_forwarded_for的头信息，用以记录原有客户端的ip地址和原来客户端的请求的服务器地址
 	
 	    #access_log  logs/access.log  main;
 
-设置access_log的存放路径，在使用log_format指令设置了日志格式后需要该指令来设置access_log日志文件的存放路径
+设置access_log的存放路径和记录格式，在使用log_format指令设置了日志格式后需要该指令来设置access_log日志文件的存放路径
 	
 		rewrite_log on;
 	    sendfile        on;
@@ -161,11 +160,11 @@ include        fastcgi_params;//包含进fastcgi的配置文件
 	        #}
 
 该命令禁止访问.htaccess文件，如果apache的文档根目录与nginx's根目录共同作用。就是为了避免都设置后错乱。
-设置访问格式：访问的文件中包含.ht的话，全部禁止访问deny  all
+设置访问格式：访问的文件中包含.ht的话，全部禁止访问deny all
 
 ###下面来个配置好的例子
 		
-		location ~ /moli20/moli-tv/epg1 {//这个命令指定当浏览器访问server_name//moli20/moli-tv/epg1时，使用以下的规则
+		location ~ /moli20/moli-tv/epg1 {//这个命令指定当浏览器访问server_name/moli20/moli-tv/epg1时，使用以下的规则
                 add_header Source newapi;
                 include fastcgi_params;
                 fastcgi_pass 127.0.0.1:9000;
